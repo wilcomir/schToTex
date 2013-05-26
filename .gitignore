@@ -38,3 +38,7 @@ nosetests.xml
 /kicad/*.lib
 /kicad/*.pro
 /kicad/*.bak
+
+#ignore every tek related file except the source code file
+out.*
+!out.tek

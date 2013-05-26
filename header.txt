@@ -1,0 +1,13 @@
+\documentclass[utf8x]{article}
+
+\usepackage{graphicx}
+\usepackage{circuitikz}
+
+\begin{document}
+
+%this 1cm is necessary so that connections does not mess around.
+%a proper kicad library will be necessary as well
+
+\ctikzset {bipoles/length=1cm}
+\begin{circuitikz}[american voltages,full diodes]]
+\draw

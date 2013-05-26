@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date 26/05/2013 21:43:32
+EESchema Schematic File Version 2  date 27/05/2013 01:24:14
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -91,9 +91,7 @@ $EndComp
 Wire Wire Line
 	4250 3600 4350 3600
 Wire Wire Line
-	4250 4400 5150 4400
-Wire Wire Line
-	5150 4400 6350 4400
+	4250 4400 6350 4400
 Wire Wire Line
 	6350 4400 6350 3600
 Wire Wire Line
@@ -107,4 +105,9 @@ Wire Wire Line
 	4250 4400 4250 4300
 Wire Wire Line
 	4250 3700 4250 3600
+Wire Wire Line
+	5150 4400 5150 4850
+Wire Wire Line
+	5150 4850 6150 4850
+NoConn ~ 6150 4850
 $EndSCHEMATC

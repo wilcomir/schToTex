@@ -70,23 +70,15 @@ for line in f_in:
         print "Wire found!"
         line = f_in.next()
         f_out.write(Wire(line).to_tek())
-    elif __COMPONENT__ in line:
-        print "Component found!"
     elif __JUNCTION__ in line:
         print "Junction found!"
+        f_out.write(Junction(line).to_tek())
     elif __NO_CONNECT__ in line:
         print "No connect found!"
+        f_out.write(NoConnect(line).to_tek())
+    elif __COMPONENT__ in line:
+        print "Component found!"
     
-    # if wire_match:
-        # wire_match = False
-        # #strip removes leading and trailing whitespaces, split separates using the space as tokenizer, map converts the string list to int list
-        # coords = map(int, line.strip().split(" "))
-        # w = Wire(coords)
-        # f_out.write(w.to_tek())  
-
-        
-    # if __WIRE__ in line:
-        # wire_match = True
             
 #appending the footer            
 f_out.write(__TEK_FOOTER__)

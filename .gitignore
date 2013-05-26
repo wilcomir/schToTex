@@ -33,3 +33,8 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# kicad useless files
+/kicad/*.lib
+/kicad/*.pro
+/kicad/*.bak

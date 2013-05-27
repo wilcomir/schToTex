@@ -36,9 +36,9 @@ nosetests.xml
 
 # kicad useless files
 /kicad/*
-#but not tek.lib and *.sch
+#but not tek.lib and test.sch
 !/kicad/tek.lib
-!/kicad/*.sch
+!/kicad/test.sch
 
 #ignore every tek related file except the source code file
 out.*

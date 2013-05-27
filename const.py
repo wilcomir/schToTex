@@ -24,5 +24,6 @@ __COMP_ENDING__ = "\t"
 # Components names
 __RESISTOR__ = "R"
 __CAPACITOR__ = "C"
+__INDUCTOR__ = "L"
 # This converts from mils, used in .sch, to cm, used by circuitikz
 __MILS_TO_CM__ = 0.002  

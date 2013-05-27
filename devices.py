@@ -56,8 +56,8 @@ class Component:
         self.dict = {}
         print self.block
     def to_tek(self):
-        if self.dict["name"] == const.__RESISTOR__:
-            # We must draw a resistor. Let's generate the start and end coordinates based on the orientation.
+        if self.dict["name"] == const.__RESISTOR__ or self.dict["name"] == const.__CAPACITOR__ or self.dict["name"] == const.__INDUCTOR__:
+            # this component is a bilpole, the tek.lib is drawn so they can be rotated in the same manner
             x_start = x_end = self.dict["x"]
             y_start = y_end = self.dict["y"]
             if self.dict["o_01"] == -1:
@@ -76,7 +76,7 @@ class Component:
                 # up to down
                 y_start += 0.5
                 y_end -= 0.5
-            return "({0},{1}) to [R, l=${2}$] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end)
+            return "({0},{1}) to [{5}, l=${2}$] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, self.dict["name"])
         else:
             return "%Component not supported. Sorry!\n"
             

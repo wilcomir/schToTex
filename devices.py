@@ -54,7 +54,6 @@ class Component:
     def __init__(self, text_block):
         self.block = text_block
         self.dict = {}
-        print self.block
     def to_tek(self):
         if self.dict["name"] == const.__RESISTOR__ or self.dict["name"] == const.__CAPACITOR__ or self.dict["name"] == const.__INDUCTOR__:
             # this component is a bilpole, the tek.lib is drawn so they can be rotated in the same manner
@@ -85,7 +84,6 @@ class Component:
         for line in block_iterator:
             while const.__END_COMPONENT__ not in line:
                 line = block_iterator.next()
-                # print line
                 if line.startswith(const.__COMP_LABEL__,0,len(const.__COMP_LABEL__)):
                     temp = line.strip().split(" ")
                     temp.pop(0)

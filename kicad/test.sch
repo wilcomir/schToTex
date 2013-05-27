@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date 27/05/2013 17:43:07
+EESchema Schematic File Version 2  date 27/05/2013 23:33:49
 LIBS:tek
 LIBS:device
 LIBS:power
@@ -26,17 +26,6 @@ F 1 "C" H 3706 3015 40  0000 L CNN
 F 2 "~" H 3738 2950 30  0000 C CNN
 F 3 "~" H 3700 3100 60  0000 C CNN
 	1    3700 3100
-	0    -1   -1   0   
-$EndComp
-$Comp
-L L L1
-U 1 1 51A37697
-P 3700 3300
-F 0 "L1" V 3600 3300 50  0000 C CNN
-F 1 "L" V 3750 3300 50  0000 C CNN
-F 2 "~" V 3700 3300 60  0000 C CNN
-F 3 "~" V 3700 3300 60  0000 C CNN
-	1    3700 3300
 	0    -1   -1   0   
 $EndComp
 $Comp
@@ -304,5 +293,16 @@ F 2 "~" V 8530 3450 30  0000 C CNN
 F 3 "~" H 8600 3450 30  0000 C CNN
 	1    8600 3450
 	0    -1   1    0   
+$EndComp
+$Comp
+L L L1
+U 1 1 51A3CD9E
+P 3700 3300
+F 0 "L1" V 3750 3300 50  0000 C CNN
+F 1 "L" V 3600 3300 50  0000 C CNN
+F 2 "~" V 3700 3300 60  0000 C CNN
+F 3 "~" V 3700 3300 60  0000 C CNN
+	1    3700 3300
+	0    -1   -1   0   
 $EndComp
 $EndSCHEMATC

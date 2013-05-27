@@ -19,7 +19,7 @@ __COMP_LABEL__ = "L"
 __COMP_TIME__ = "U"
 __COMP_POS__ = "P"
 __COMP_FIELD__ = "F"
-__COMP_ALT_POS__ = "1"
+__COMP_ENDING__ = "\t"
 
 # Components names
 __RESISTOR__ = "R"

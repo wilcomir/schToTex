@@ -35,11 +35,10 @@ nosetests.xml
 .pydevproject
 
 # kicad useless files
-/kicad/*.lib
-/kicad/*.pro
-/kicad/*.bak
-#but not tek.lib
+/kicad/*
+#but not tek.lib and *.sch
 !/kicad/tek.lib
+!/kicad/*.sch
 
 #ignore every tek related file except the source code file
 out.*

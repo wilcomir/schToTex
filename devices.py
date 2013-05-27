@@ -76,6 +76,9 @@ class Component:
                 y_start += 0.5
                 y_end -= 0.5
             return "({0},{1}) to [{5}, l=${2}$] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, self.dict["name"])
+        elif self.dict["name"] == const.__GND__:
+            # Assuming ground is towards down
+            return "({0},{1}) node[ground]{{}}".format(self.dict["x"], self.dict["y"])
         else:
             return "%Component not supported. Sorry!\n"
             

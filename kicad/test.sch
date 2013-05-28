@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date 27/05/2013 23:54:06
+EESchema Schematic File Version 2  date 28/05/2013 20:35:24
 LIBS:tek
 LIBS:device
 LIBS:power
@@ -9,7 +9,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
-Date "27 may 2013"
+Date "28 may 2013"
 Rev ""
 Comp ""
 Comment1 ""
@@ -124,4 +124,27 @@ F 3 "~" H 7000 4250 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 NoConn ~ 3400 3250
+$Comp
+L NMOS Q?
+U 1 1 51A4F8F9
+P 3850 4050
+F 0 "Q?" H 3860 4220 60  0000 R CNN
+F 1 "NMOS" H 3860 3900 60  0000 R CNN
+F 2 "~" H 3850 4050 60  0000 C CNN
+F 3 "~" H 3850 4050 60  0000 C CNN
+	1    3850 4050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 3850 4000 3850
+Wire Wire Line
+	3950 3850 3950 3800
+Wire Wire Line
+	3650 4000 3650 4100
+Wire Wire Line
+	3650 4050 3600 4050
+Wire Wire Line
+	3900 4250 4000 4250
+Wire Wire Line
+	3950 4250 3950 4300
 $EndSCHEMATC

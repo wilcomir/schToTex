@@ -33,6 +33,8 @@
 (14.0,-6.5) to (14.0,-7.1)
 (14.0,-8.1) to (14.0,-8.5)
 (14.0,-8.5) node[ground]{}(6.8,-6.5) node[ocirc] {}
+(10,-10) node[nmos]{}
+(10.2,-10.5) to[C] (10.2,-9.5)
 ; \end{circuitikz}
 
 \end{document}

@@ -3,6 +3,9 @@
 #
 #author: Vladimir Cravero - vladimircravero@gmail.com
 
+# Generic imports
+import sys
+
 # This file contains all the supported devices classes
 from devices import *
 
@@ -17,22 +20,28 @@ try:
     f_in = open(const.__INPUT_FILE_NAME__, "r")
 except IOError as e:
     print "IO Error opening the input file({0}): {1}\n".format(e.errno, e.strerror)
+    sys.exit(-1)
 except:
     print "Unexpected error({0}): {1}\n", sys.exc_info()[0]
+    sys.exit(-1)
 
 try:
     f_out = open(const.__OUT_FILE_NAME__, "w")
 except IOError as e:
     print "IO Error opening the output file({0}): {1}\n".format(e.errno, e.strerror)
+    sys.exit(-1)
 except:
     print "Unexpected error({0}): {1}\n", sys.exc_info()[0]
+    sys.exit(-1)
     
 try:
     f_header = open(const.__TEK_HEADER_FILE_NAME__, "r")
 except IOError as e:
     print "IO Error opening the input file({0}): {1}\n".format(e.errno, e.strerror)
+    sys.exit(-1)
 except:
     print "Unexpected error({0}): {1}\n", sys.exc_info()[0]
+    sys.exit(-1)
 
 # Writing the header
 # WARNING: out will be erased at this point!
@@ -40,15 +49,6 @@ for line in f_header:
     f_out.write(line)
 
 f_header.close()
-f_out.close()
-
-# We need to open f_out in append mode
-try:
-    f_out = open(const.__OUT_FILE_NAME__, "a")
-except IOError as e:
-    print "IO Error opening the output file({0}): {1}\n".format(e.errno, e.strerror)
-except:
-    print "Unexpected error({0}): {1}\n", sys.exc_info()[0]
 
 print "Done. Starting parser..."
 
@@ -85,6 +85,7 @@ for line in f_in:
 f_out.write(const.__TEK_FOOTER__)
 
 print "Done. Closing files..." 
+
 # Don't forget to close all the files  
 f_in.close()
 f_out.close()

@@ -55,9 +55,14 @@ class Component:
         self.block = text_block
         self.dict = {}
     def to_tek(self):
-        if self.dict["name"] == const.__RESISTOR__ or self.dict["name"] == const.__CAPACITOR__ or self.dict["name"] == const.__INDUCTOR__:
+        if self.dict["name"] == const.__RESISTOR__ or self.dict["name"] == const.__CAPACITOR__ or self.dict["name"] == const.__INDUCTOR__ or self.dict["name"] == const.__NMOS__:
             # this component is a bipole, the tek.lib is drawn so they can be rotated in the same manner
             # TODO I really don't like this 0.5
+            
+            # TODO this if is here just as a temporary workaround
+            if self.dict["name"] == const.__NMOS__:
+                self.dict["name"] = "Tnmos"
+            
             x_start = x_end = self.dict["x"]
             y_start = y_end = self.dict["y"]
             if self.dict["o_01"] == -1:
@@ -81,10 +86,10 @@ class Component:
             # Assuming ground is towards down
             # TODO must handle proper orientation!
             return "({0},{1}) node[ground]{{}}".format(self.dict["x"], self.dict["y"])
-        elif self.dict["name"] == const.__NMOS__ or self.dict["name"] == const.__PMOS__:
-            # this component is a MOS transistor
-            print "mos found!"
-            return "({0},{1}) node[{2}]{{}}".format(self.dict["x"], self.dict["y"], self.dict["name"].lower())
+        # elif self.dict["name"] == const.__NMOS__ or self.dict["name"] == const.__PMOS__:
+            ## this component is a MOS transistor
+            # print "mos found!"
+            # return "({0},{1}) node[{2}]{{}}".format(self.dict["x"], self.dict["y"], self.dict["name"].lower())
             
         else:
             return "%Component not supported. Sorry!\n"

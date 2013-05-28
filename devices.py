@@ -56,7 +56,8 @@ class Component:
         self.dict = {}
     def to_tek(self):
         if self.dict["name"] == const.__RESISTOR__ or self.dict["name"] == const.__CAPACITOR__ or self.dict["name"] == const.__INDUCTOR__:
-            # this component is a bilpole, the tek.lib is drawn so they can be rotated in the same manner
+            # this component is a bipole, the tek.lib is drawn so they can be rotated in the same manner
+            # TODO I really don't like this 0.5
             x_start = x_end = self.dict["x"]
             y_start = y_end = self.dict["y"]
             if self.dict["o_01"] == -1:
@@ -78,7 +79,13 @@ class Component:
             return "({0},{1}) to [{5}, l=${2}$] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, self.dict["name"])
         elif self.dict["name"] == const.__GND__:
             # Assuming ground is towards down
+            # TODO must handle proper orientation!
             return "({0},{1}) node[ground]{{}}".format(self.dict["x"], self.dict["y"])
+        elif self.dict["name"] == const.__NMOS__ or self.dict["name"] == const.__PMOS__:
+            # this component is a MOS transistor
+            print "mos found!"
+            return "({0},{1}) node[{2}]{{}}".format(self.dict["x"], self.dict["y"], self.dict["name"].lower())
+            
         else:
             return "%Component not supported. Sorry!\n"
             
@@ -99,6 +106,7 @@ class Component:
                     temp.pop(0)  # Don't really know what the last two values are for
                     self.dict["time_stamp"] = temp.pop(0)
                 elif line.startswith(const.__COMP_POS__,0,len(const.__COMP_POS__)):
+                    # Position line. WARNING: we must change y sign since the coordinates systems are different.
                     temp = line.strip().split(" ")
                     temp.pop(0)
                     self.dict["x"] = int(temp.pop(0)) * const.__MILS_TO_CM__

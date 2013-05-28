@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date 28/05/2013 20:35:24
+EESchema Schematic File Version 2  date 28/05/2013 22:29:23
 LIBS:tek
 LIBS:device
 LIBS:power
@@ -39,21 +39,6 @@ F 3 "~" V 5650 3800 60  0000 C CNN
 	1    5650 3800
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	5650 3550 5650 3450
-Wire Wire Line
-	5650 3450 5150 3450
-Wire Wire Line
-	5150 3450 5150 3550
-Wire Wire Line
-	5650 4050 5650 4150
-Wire Wire Line
-	5650 4150 5150 4150
-Wire Wire Line
-	5150 4150 5150 4050
-Wire Wire Line
-	5400 4150 5400 4250
-Connection ~ 5400 4150
 $Comp
 L GND #PWR1
 U 1 1 51A3D565
@@ -65,11 +50,6 @@ F 3 "~" H 5400 4250 60  0000 C CNN
 	1    5400 4250
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	5400 3450 5400 3250
-Wire Wire Line
-	4900 3250 7000 3250
-Connection ~ 5400 3450
 $Comp
 L C C1
 U 1 1 51A3D57D
@@ -92,11 +72,6 @@ F 3 "~" V 4000 3250 60  0000 C CNN
 	1    4000 3250
 	0    1    1    0   
 $EndComp
-Wire Wire Line
-	4400 3250 4250 3250
-Wire Wire Line
-	3750 3250 3400 3250
-Connection ~ 5400 3250
 $Comp
 L R R1
 U 1 1 51A3D5C1
@@ -108,10 +83,6 @@ F 3 "~" H 7000 3800 30  0000 C CNN
 	1    7000 3800
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	7000 3250 7000 3550
-Wire Wire Line
-	7000 4050 7000 4250
 $Comp
 L GND #PWR2
 U 1 1 51A3D5EE
@@ -126,25 +97,78 @@ $EndComp
 NoConn ~ 3400 3250
 $Comp
 L NMOS Q?
-U 1 1 51A4F8F9
-P 3850 4050
-F 0 "Q?" H 3860 4220 60  0000 R CNN
-F 1 "NMOS" H 3860 3900 60  0000 R CNN
-F 2 "~" H 3850 4050 60  0000 C CNN
-F 3 "~" H 3850 4050 60  0000 C CNN
-	1    3850 4050
+U 1 1 51A50762
+P 3825 5825
+F 0 "Q?" H 3735 5995 60  0000 R CNN
+F 1 "NMOS" H 3735 5675 60  0000 R CNN
+F 2 "~" H 3725 5825 60  0000 C CNN
+F 3 "~" H 3725 5825 60  0000 C CNN
+	1    3825 5825
+	1    0    0    -1  
+$EndComp
+$Comp
+L NMOS Q?
+U 1 1 51A5133B
+P 3825 4900
+F 0 "Q?" H 3735 5070 60  0000 R CNN
+F 1 "NMOS" H 3735 4750 60  0000 R CNN
+F 2 "~" H 3725 4900 60  0000 C CNN
+F 3 "~" H 3725 4900 60  0000 C CNN
+	1    3825 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 51A513DE
+P 3825 4165
+F 0 "R?" V 3905 4165 40  0000 C CNN
+F 1 "R" V 3832 4166 40  0000 C CNN
+F 2 "~" V 3755 4165 30  0000 C CNN
+F 3 "~" H 3825 4165 30  0000 C CNN
+	1    3825 4165
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3900 3850 4000 3850
+	5650 3450 5650 3550
 Wire Wire Line
-	3950 3850 3950 3800
+	5150 3450 5650 3450
 Wire Wire Line
-	3650 4000 3650 4100
+	5150 3450 5150 3550
 Wire Wire Line
-	3650 4050 3600 4050
+	5650 4150 5650 4050
 Wire Wire Line
-	3900 4250 4000 4250
+	4850 4150 5650 4150
 Wire Wire Line
-	3950 4250 3950 4300
+	5150 4150 5150 4050
+Wire Wire Line
+	5400 4150 5400 4250
+Connection ~ 5400 4150
+Wire Wire Line
+	5400 3450 5400 3250
+Wire Wire Line
+	4900 3250 7000 3250
+Connection ~ 5400 3450
+Wire Wire Line
+	4400 3250 4250 3250
+Wire Wire Line
+	3750 3250 3400 3250
+Connection ~ 5400 3250
+Wire Wire Line
+	7000 3250 7000 3550
+Wire Wire Line
+	7000 4050 7000 4250
+Connection ~ 5150 4150
+Wire Wire Line
+	3825 5280 3825 5445
+Wire Wire Line
+	3825 6205 3825 6440
+Wire Wire Line
+	3335 5825 2950 5825
+Wire Wire Line
+	3335 4900 3225 4900
+Wire Wire Line
+	3225 4900 3225 5825
+Connection ~ 3225 5825
+Wire Wire Line
+	3825 4520 3825 4415
 $EndSCHEMATC

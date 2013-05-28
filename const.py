@@ -25,6 +25,8 @@ __COMP_ENDING__ = "\t"
 __RESISTOR__ = "R"
 __CAPACITOR__ = "C"
 __INDUCTOR__ = "L"
+__NMOS__ = "NMOS"
+__PMOS__ = "PMOS"
 __GND__ = "GND"
 # This converts from mils, used in .sch, to cm, used by circuitikz
 __MILS_TO_CM__ = 0.002  

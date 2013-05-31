@@ -55,29 +55,31 @@ class Component:
         self.block = text_block
         self.dict = {}
     def to_tek(self):
-        if self.dict["name"] == const.__RESISTOR__ or self.dict["name"] == const.__CAPACITOR__ or self.dict["name"] == const.__INDUCTOR__ or self.dict["name"] == const.__NMOS__:
+        if self.dict["name"] == const.__RESISTOR__ or self.dict["name"] == const.__CAPACITOR__ or self.dict["name"] == const.__INDUCTOR__ or self.dict["name"] == const.__NMOS__ or self.dict["name"] == const.__PMOS__:
             # this component is a bipole, the tek.lib is drawn so they can be rotated in the same manner
             # TODO I really don't like this 0.5
             
             # TODO this if is here just as a temporary workaround
             if self.dict["name"] == const.__NMOS__:
                 self.dict["name"] = "Tnmos"
+            if self.dict["name"] == const.__PMOS__:
+                self.dict["name"] = "Tpmos"
             
             x_start = x_end = self.dict["x"]
             y_start = y_end = self.dict["y"]
-            if self.dict["o_01"] == -1:
+            if self.dict["o_01"] == 1:
                 # left to right
                 x_start -= 0.5
                 x_end += 0.5
-            elif self.dict["o_01"] == 1:
+            elif self.dict["o_01"] == -1:
                 # right to left
                 x_start += 0.5
                 x_end -= 0.5
-            elif self.dict["o_00"] == -1:
+            elif self.dict["o_00"] == 1:
                 # down to up
                 y_start -= 0.5
                 y_end += 0.5
-            elif self.dict["o_00"] == 1:
+            elif self.dict["o_00"] == -1:
                 # up to down
                 y_start += 0.5
                 y_end -= 0.5

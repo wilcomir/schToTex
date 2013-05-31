@@ -1,6 +1,5 @@
 \documentclass[utf8x]{article}
 
-\usepackage{graphicx}
 \usepackage{circuitikz}
 
 \begin{document}
@@ -9,5 +8,5 @@
 %a proper kicad library will be necessary as well
 
 \ctikzset {bipoles/length=1cm}
-\begin{circuitikz}[american voltages,full diodes]]
+\begin{circuitikz}[american voltages,full diodes]
 \draw

@@ -55,8 +55,8 @@ class Component:
         self.block = text_block
         self.dict = {}
     def to_tek(self):
-        if self.dict["name"] == const.__RESISTOR__ or self.dict["name"] == const.__CAPACITOR__ or self.dict["name"] == const.__INDUCTOR__ or self.dict["name"] == const.__NMOS__ or self.dict["name"] == const.__PMOS__:
-            # this component is a bipole, the tek.lib is drawn so they can be rotated in the same manner
+        if self.dict["name"] in const.__BIPOLES__:
+            # this component can be drawn as a bipole, the tek.lib is drawn so they can be rotated in the same manner
             # TODO I really don't like this 0.5
             
             # TODO this if is here just as a temporary workaround
@@ -64,26 +64,43 @@ class Component:
                 self.dict["name"] = "Tnmos"
             if self.dict["name"] == const.__PMOS__:
                 self.dict["name"] = "Tpmos"
+            if self.dict["name"] == const.__NPN__:
+                self.dict["name"] = "Tnpn"
+            if self.dict["name"] == const.__PNP__:
+                self.dict["name"] = "Tpnp"
             
             x_start = x_end = self.dict["x"]
             y_start = y_end = self.dict["y"]
-            if self.dict["o_01"] == 1:
+            mirror = False
+            
+            if self.dict["B"] == 1:
                 # left to right
-                x_start -= 0.5
-                x_end += 0.5
-            elif self.dict["o_01"] == -1:
+                x_start -= const.__H_STEP__
+                x_end += const.__H_STEP__
+                if self.dict["C"] == -1:
+                    mirror = True
+            elif self.dict["B"] == -1:
                 # right to left
-                x_start += 0.5
-                x_end -= 0.5
-            elif self.dict["o_00"] == 1:
-                # down to up
-                y_start -= 0.5
-                y_end += 0.5
-            elif self.dict["o_00"] == -1:
+                x_start += const.__H_STEP__
+                x_end -= const.__H_STEP__
+                if self.dict["C"] == 1:
+                    mirror = True
+            elif self.dict["D"] == 1:
                 # up to down
-                y_start += 0.5
-                y_end -= 0.5
-            return "({0},{1}) to [{5}, l=${2}$] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, self.dict["name"])
+                y_start += const.__H_STEP__
+                y_end -= const.__H_STEP__
+                if self.dict["A"] == 1:
+                    mirror = True
+            elif self.dict["D"] == -1:
+                # down to up
+                y_start -= const.__H_STEP__
+                y_end += const.__H_STEP__
+                if self.dict["A"] == -1:
+                    mirror = True
+            if mirror:
+                return "({0},{1}) to [{5}, l=${2}$, mirror] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, self.dict["name"])
+            else:
+                return "({0},{1}) to [{5}, l=${2}$] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, self.dict["name"])
         elif self.dict["name"] == const.__GND__:
             # Assuming ground is towards down
             # TODO must handle proper orientation!
@@ -94,6 +111,7 @@ class Component:
             # return "({0},{1}) node[{2}]{{}}".format(self.dict["x"], self.dict["y"], self.dict["name"].lower())
             
         else:
+            print "Unsupported component found!"
             return "%Component not supported. Sorry!\n"
             
     def parse(self):
@@ -126,10 +144,10 @@ class Component:
                     temp = line.strip().split()
                     if len(temp) == 4:
                         # That's an orientation matrix line!
-                        self.dict["o_00"] = int(temp.pop(0))
-                        self.dict["o_10"] = int(temp.pop(0))
-                        self.dict["o_01"] = int(temp.pop(0))
-                        self.dict["o_11"] = int(temp.pop(0))
+                        self.dict["A"] = int(temp.pop(0))
+                        self.dict["B"] = int(temp.pop(0))
+                        self.dict["C"] = int(temp.pop(0))
+                        self.dict["D"] = int(temp.pop(0))
                 else:
                     # We should never fall down here
                     do_something=1

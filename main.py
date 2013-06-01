@@ -59,6 +59,7 @@ wires_count = 0
 components_count = 0
 junctions_count = 0
 # Parser
+c_id = 0
 for line in f_in:
     lines_parsed += 1
     if WIRE in line:
@@ -79,9 +80,10 @@ for line in f_in:
             line = f_in.next()
             lines_parsed += 1
         component_block = component_block + line
-        c = Component(component_block)
+        c = Component(component_block, c_id)
         c.parse()
         f_out.write(c.to_tek())
+        c_id += 1
            
 #appending the footer            
 f_out.write(TEK_FOOTER)

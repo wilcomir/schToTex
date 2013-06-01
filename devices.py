@@ -12,7 +12,8 @@ class Wire:
     
     @staticmethod
     def parse(line):
-        coords = map(int, line.strip().split(" "))
+
+        coords = map(int, line.strip().split())
         return coords
 
 # Filled dot that indicates a connection         
@@ -26,7 +27,7 @@ class Junction:
     
     @staticmethod
     def parse(line):
-        temp = line.strip().split(" ")
+        temp = line.strip().split()
         temp.pop(0)
         temp.pop(0)
         coords = map(int, temp)
@@ -43,7 +44,7 @@ class NoConnect:
     
     @staticmethod
     def parse(line):
-        temp = line.strip().split(" ")
+        temp = line.strip().split()
         temp.pop(0)
         temp.pop(0)
         coords = map(int, temp)
@@ -53,6 +54,7 @@ class NoConnect:
 class Mos:
     height = 800
     h_step = MILS_TO_CM * height / 2
+    gate_offset = 1
 class Passive:
     height = 500
     h_step = MILS_TO_CM * height / 2
@@ -65,9 +67,10 @@ class Default:
 # Generic component, will use above classes        
 class Component:
 
-    def __init__(self, text_block):
+    def __init__(self, text_block, id):
         self.block = text_block
         self.dict = {}
+        self.id = id
     def to_tek(self):
         if self.dict["name"] in BIPOLES:
             # This component can be drawn as a bipole, the tek.lib is drawn so they can be rotated in the same manner
@@ -84,35 +87,53 @@ class Component:
             x_start = x_end = self.dict["x"]
             y_start = y_end = self.dict["y"]
             mirror = False
+            vertical = False
+            horizontal = False
             
             if self.dict["B"] == 1:
                 # left to right
+                horizontal = True
                 x_start -= self.type.h_step
                 x_end += self.type.h_step
                 if self.dict["C"] == -1:
                     mirror = True
             elif self.dict["B"] == -1:
                 # right to left
+                horizontal = True
                 x_start += self.type.h_step
                 x_end -= self.type.h_step
                 if self.dict["C"] == 1:
                     mirror = True
             elif self.dict["D"] == 1:
                 # up to down
+                vertical = True
                 y_start += self.type.h_step
                 y_end -= self.type.h_step
                 if self.dict["A"] == 1:
                     mirror = True
             elif self.dict["D"] == -1:
                 # down to up
+                vertical = True
                 y_start -= self.type.h_step
                 y_end += self.type.h_step
                 if self.dict["A"] == -1:
                     mirror = True
             if mirror:
-                return "({0},{1}) to [{5}, l=${2}$, mirror] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, TRANSLATE[self.dict["name"]])
+                c_line = "({0},{1}) to [{5}, l=${2}$, n={6}, mirror] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, TRANSLATE[self.dict["name"]], self.id)
             else:
-                return "({0},{1}) to [{5}, l=${2}$] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, TRANSLATE[self.dict["name"]])
+                c_line = "({0},{1}) to [{5}, l=${2}$, n={6}] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, TRANSLATE[self.dict["name"]], self.id)
+            if self.type == Mos:
+                # Must draw the gate connections. Yes, that sucks.
+                x_small = self.dict["x"]
+                y_small = self.dict["y"]
+                if vertical:
+                    x_small = x_small - self.type.gate_offset*self.dict["A"]
+                elif horizontal:
+                    y_small = y_small + self.type.gate_offset*self.dict["C"]
+                else:
+                    print "Component id={0} is not horizontal nor vertical".format(self.id)
+                aux_line = "({0}.gate) to ({1},{2})\n".format(self.id, x_small, y_small)
+            return c_line + aux_line
         elif self.dict["name"] == GND:
             # Assuming ground is towards down
             # TODO must handle proper orientation!
@@ -128,19 +149,19 @@ class Component:
             while END_COMPONENT not in line:
                 line = block_iterator.next()
                 if line.startswith(COMP_LABEL,0,len(COMP_LABEL)):
-                    temp = line.strip().split(" ")
+                    temp = line.strip().split()
                     temp.pop(0)
                     self.dict["name"] = temp.pop(0)
                     self.dict["reference"] = temp.pop(0)
                 elif line.startswith(COMP_TIME,0,len(COMP_TIME)):
-                    temp = line.strip().split(" ")
+                    temp = line.strip().split()
                     temp.pop(0)
                     temp.pop(0)
                     temp.pop(0)  # Don't really know what the last two values are for
                     self.dict["time_stamp"] = temp.pop(0)
                 elif line.startswith(COMP_POS,0,len(COMP_POS)):
                     # Position line. WARNING: we must change y sign since the coordinates systems are different.
-                    temp = line.strip().split(" ")
+                    temp = line.strip().split()
                     temp.pop(0)
                     self.dict["x"] = int(temp.pop(0)) * MILS_TO_CM
                     self.dict["y"] = -int(temp.pop(0)) * MILS_TO_CM

@@ -1,4 +1,4 @@
-\documentclass[utf8x]{article}
+\documentclass[a4paper, landscape]{article}
 
 \usepackage{circuitikz}
 

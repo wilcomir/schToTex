@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 from const import *
 
 # Simple wire connection
@@ -50,7 +49,20 @@ class NoConnect:
         coords = map(int, temp)
         return coords
 
-# Generic component, will call other classes methods        
+# These small containers hold parameters used to draw the various components
+class Mos:
+    height = 800
+    h_step = MILS_TO_CM * height / 2
+class Passive:
+    height = 500
+    h_step = MILS_TO_CM * height / 2
+class Bjt:
+    height = 500
+    h_step = MILS_TO_CM * height / 2
+class Default:
+    height = 500
+    h_step = MILS_TO_CM * height / 2
+# Generic component, will use above classes        
 class Component:
 
     def __init__(self, text_block):
@@ -58,51 +70,43 @@ class Component:
         self.dict = {}
     def to_tek(self):
         if self.dict["name"] in BIPOLES:
-            # this component can be drawn as a bipole, the tek.lib is drawn so they can be rotated in the same manner
-            # TODO I really don't like this 0.5
-            
-            # TODO this if is here just as a temporary workaround, better use a dictionary.
-            # if self.dict["name"] == NMOS:
-                # self.dict["name"] = "Tnmos"
-                # H_STEP = 0.8
-            # elif self.dict["name"] == PMOS:
-                # self.dict["name"] = "Tpmos"
-                # H_STEP = 0.8
-            # elif self.dict["name"] == NPN:
-                # self.dict["name"] = "Tnpn"
-                # H_STEP = 0.8
-            # elif self.dict["name"] == PNP:
-                # self.dict["name"] = "Tpnp"
-                # H_STEP = 0.8
-            # else:
-                # H_STEP = 0.5
-            
+            # This component can be drawn as a bipole, the tek.lib is drawn so they can be rotated in the same manner
+            # First of all we must check the component type and create the appropriate object
+            if self.dict["name"] in [NMOS, PMOS]:
+                self.type = Mos
+            elif self.dict["name"] in [RESISTOR, CAPACITOR, INDUCTOR]:
+                self.type = Passive
+            elif self.dict["name"] in [NPN, PNP]:
+                self.type = Bjt
+            else:
+                self.type = Default
+            # Rotation section. All possible eight cases are "manually" checked.
             x_start = x_end = self.dict["x"]
             y_start = y_end = self.dict["y"]
             mirror = False
             
             if self.dict["B"] == 1:
                 # left to right
-                x_start -= H_STEP
-                x_end += H_STEP
+                x_start -= self.type.h_step
+                x_end += self.type.h_step
                 if self.dict["C"] == -1:
                     mirror = True
             elif self.dict["B"] == -1:
                 # right to left
-                x_start += H_STEP
-                x_end -= H_STEP
+                x_start += self.type.h_step
+                x_end -= self.type.h_step
                 if self.dict["C"] == 1:
                     mirror = True
             elif self.dict["D"] == 1:
                 # up to down
-                y_start += H_STEP
-                y_end -= H_STEP
+                y_start += self.type.h_step
+                y_end -= self.type.h_step
                 if self.dict["A"] == 1:
                     mirror = True
             elif self.dict["D"] == -1:
                 # down to up
-                y_start -= H_STEP
-                y_end += H_STEP
+                y_start -= self.type.h_step
+                y_end += self.type.h_step
                 if self.dict["A"] == -1:
                     mirror = True
             if mirror:
@@ -113,10 +117,6 @@ class Component:
             # Assuming ground is towards down
             # TODO must handle proper orientation!
             return "({0},{1}) node[ground]{{}}".format(self.dict["x"], self.dict["y"])
-        # elif self.dict["name"] == NMOS or self.dict["name"] == PMOS:
-            ## this component is a MOS transistor
-            # print "mos found!"
-            # return "({0},{1}) node[{2}]{{}}".format(self.dict["x"], self.dict["y"], self.dict["name"].lower())
             
         else:
             print "Unsupported component found!"

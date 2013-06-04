@@ -61,6 +61,8 @@ class Passive:
 class Bjt:
     height = 500
     h_step = MILS_TO_CM * height / 2
+    base_offset = 0.9
+    ce_offset = 0.8
 class Default:
     height = 500
     h_step = MILS_TO_CM * height / 2
@@ -124,15 +126,56 @@ class Component:
                 c_line = "({0},{1}) to [{5}, l=${2}$, n={6}] ({3},{4})\n".format(x_start, y_start, self.dict["reference"], x_end, y_end, TRANSLATE[self.dict["name"]], self.id)
             if self.type == Mos:
                 # Must draw the gate connections. Yes, that sucks.
-                x_small = self.dict["x"]
-                y_small = self.dict["y"]
+                x_conn = self.dict["x"]
+                y_conn = self.dict["y"]
                 if vertical:
-                    x_small = x_small - self.type.gate_offset*self.dict["A"]
+                    x_conn = x_conn - self.type.gate_offset*self.dict["A"]
                 elif horizontal:
-                    y_small = y_small + self.type.gate_offset*self.dict["C"]
+                    y_conn = y_conn + self.type.gate_offset*self.dict["C"]
                 else:
                     print "Component id={0} is not horizontal nor vertical".format(self.id)
-                aux_line = "({0}.gate) to ({1},{2})\n".format(self.id, x_small, y_small)
+                aux_line = "({0}.gate) to ({1},{2})\n".format(self.id, x_conn, y_conn)
+            elif self.type == Bjt:
+                # We probably will need to do something cool here
+                # Must draw the base, collector and emitter connections. Even worse.
+                x_conn = self.dict["x"]
+                y_conn = self.dict["y"]
+                # This is necessary since collector and emitter are swapped depending on the bjt, so the connections must change accordingly
+                # WARNING the base connection is always correct!
+                if self.dict["name"] == NPN:
+                    ce_sign = 1
+                else:
+                    ce_sign = -1
+                aux_line = ""
+                if vertical:
+                    # Base link
+                    x_conn = self.dict["x"] - self.type.base_offset*self.dict["A"]
+                    aux_line += "({0}.base) to ({1},{2})\n".format(self.id, x_conn, y_conn)
+                    x_conn = self.dict["x"]
+                    # Collector link
+                    y_conn = self.dict["y"] - self.type.ce_offset*self.dict["D"]*ce_sign
+                    aux_line += "({0}.collector) to ({1},{2})\n".format(self.id, x_conn, y_conn)
+                    y_conn = self.dict["y"]                    
+                    # Emitter link
+                    y_conn = self.dict["y"] + self.type.ce_offset*self.dict["D"]*ce_sign
+                    aux_line += "({0}.emitter) to ({1},{2})\n".format(self.id, x_conn, y_conn)
+                    y_conn = self.dict["y"]
+                elif horizontal:
+                    # Base link
+                    y_conn = y_conn + self.type.base_offset*self.dict["C"]
+                    aux_line += "({0}.base) to ({1},{2})\n".format(self.id, x_conn, y_conn)
+                    y_conn = self.dict["y"]
+                    # Collector link
+                    x_conn = self.dict["x"] + self.type.ce_offset*self.dict["B"]*ce_sign
+                    aux_line += "({0}.collector) to ({1},{2})\n".format(self.id, x_conn, y_conn)
+                    x_conn = self.dict["x"]                    
+                    # Emitter link
+                    x_conn = self.dict["x"] - self.type.ce_offset*self.dict["B"]*ce_sign
+                    aux_line += "({0}.emitter) to ({1},{2})\n".format(self.id, x_conn, y_conn)
+                    x_conn = self.dict["x"]
+                else:
+                    aux_line = "%This component was not horizontal nor vertical\n"
+                    print "Component id={0} is not horizontal nor vertical".format(self.id)
             return c_line + aux_line
         elif self.dict["name"] in MONOPOLES:
             # This component can be drawn as a monopole

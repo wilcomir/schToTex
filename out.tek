@@ -10,8 +10,24 @@
 \ctikzset {bipoles/length=1cm}
 \begin{circuitikz}[american voltages,full diodes]
 \draw
-(6.4,-12.3) node[ground, rotate=0]{}
-(6.4,-12.3) to (7.0,-12.3)
+(13.4,-6.8) to [Tnpn, l=$Q?$, n=0] (13.4,-5.8)
+(0.base) to (12.5,-6.3)
+(0.collector) to (13.4,-5.5)
+(0.emitter) to (13.4,-7.1)
+(15.9,-6.8) to [Tpnp, l=$Q?$, n=1] (15.9,-5.8)
+(1.base) to (15.0,-6.3)
+(1.collector) to (15.9,-7.1)
+(1.emitter) to (15.9,-5.5)
+(12.8,-7.1) to (14.0,-7.1)
+(12.8,-5.5) to (13.9,-5.5)
+(12.5,-5.9) to (12.5,-6.7)
+(15.4,-7.1) to (16.4,-7.1)
+(15.0,-5.8) to (15.0,-6.6)
+(15.5,-5.5) to (16.5,-5.5)
+(15.5,-4.4) to [Tpnp, l=$Q?$, n=2] (14.5,-4.4)
+(2.base) to (15.0,-5.3)
+(2.collector) to (15.8,-4.4)
+(2.emitter) to (14.2,-4.4)
 ; \end{circuitikz}
 
 \end{document}

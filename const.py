@@ -41,16 +41,14 @@ TRANSLATE = {
     PMOS : "Tpmos",
     NPN : "Tnpn",
     PNP : "Tpnp",
-    GND : "GND",
+    GND : "ground",
 }
 
 # Bipoles set. This are not bipoles actually but they can be drawn in the same way.
 BIPOLES = {RESISTOR, CAPACITOR, INDUCTOR, NMOS, PMOS, NPN, PNP}
+MONOPOLES = {GND}
 # This converts from mils, used in .sch, to cm, used by circuitikz
 MILS_TO_CM = 0.002
-# This is used to calculate start and stop position for from..to syntax (half step)
-# TODO this must change, it is not constant through all the components.
-H_STEP = 0.5
 
 # Fuffa
-VERSION = "0.1"
+VERSION = "0.2"

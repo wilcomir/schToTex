@@ -134,10 +134,19 @@ class Component:
                     print "Component id={0} is not horizontal nor vertical".format(self.id)
                 aux_line = "({0}.gate) to ({1},{2})\n".format(self.id, x_small, y_small)
             return c_line + aux_line
-        elif self.dict["name"] == GND:
-            # Assuming ground is towards down
-            # TODO must handle proper orientation!
-            return "({0},{1}) node[ground]{{}}".format(self.dict["x"], self.dict["y"])
+        elif self.dict["name"] in MONOPOLES:
+            # This component can be drawn as a monopole
+            # Currently only ground is supported
+            self.rotation = 0
+            if self.dict["B"] == 1:
+                self.rotation = 270
+            elif self.dict["B"] == -1:
+                self.rotation = 90
+            elif self.dict["D"] == 1:
+                self.rotation = 180
+            elif self.dict["D"] == -1:
+                self.rotation = 0
+            return "({0},{1}) node[{2}, rotate={3}]{{}}\n".format(self.dict["x"], self.dict["y"], TRANSLATE[self.dict["name"]], self.rotation)
             
         else:
             print "Unsupported component found!"

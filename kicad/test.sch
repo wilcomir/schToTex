@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date 05/06/2013 01:44:31
+EESchema Schematic File Version 2  date 05/06/2013 02:00:51
 LIBS:tek
 LIBS:device
 LIBS:power
@@ -9,7 +9,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
-Date "4 jun 2013"
+Date "5 jun 2013"
 Rev ""
 Comp ""
 Comment1 ""
@@ -40,11 +40,11 @@ F 3 "~" H 7850 3150 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6400 3550 7000 3550
+	4950 3550 7000 3550
 Wire Wire Line
 	6400 2750 6950 2750
 Wire Wire Line
-	6250 2950 6250 3350
+	6250 2400 6250 3350
 Wire Wire Line
 	7700 3550 8200 3550
 Wire Wire Line
@@ -62,4 +62,95 @@ F 3 "~" H 7400 2200 60  0000 C CNN
 	1    7500 2200
 	0    -1   -1   0   
 $EndComp
+$Comp
+L NMOS Q?
+U 1 1 51AE7F8C
+P 4950 2950
+F 0 "Q?" H 4860 3120 60  0000 R CNN
+F 1 "NMOS" H 4860 2800 60  0000 R CNN
+F 2 "~" H 4850 2950 60  0000 C CNN
+F 3 "~" H 4850 2950 60  0000 C CNN
+	1    4950 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4950 3350 4950 3550
+Wire Wire Line
+	4950 2550 4950 2100
+Wire Wire Line
+	4950 2100 4900 2100
+Wire Wire Line
+	4900 2100 4900 2050
+Wire Wire Line
+	4900 2050 4950 2050
+Wire Wire Line
+	4950 2050 4950 2000
+Wire Wire Line
+	4950 2000 4900 2000
+Wire Wire Line
+	4900 2000 4900 1950
+Wire Wire Line
+	4900 1950 4950 1950
+Wire Wire Line
+	4950 1950 4950 1900
+Wire Wire Line
+	4950 1900 4900 1900
+Wire Wire Line
+	4900 1900 4900 1850
+Wire Wire Line
+	4900 1850 4950 1850
+Wire Wire Line
+	4950 1850 4950 1650
+Wire Wire Line
+	4950 2400 6250 2400
+Connection ~ 4950 2400
+Wire Wire Line
+	3200 2950 4450 2950
+Wire Wire Line
+	3350 2950 3350 2000
+Wire Wire Line
+	3350 2000 3050 2000
+Wire Wire Line
+	3050 2000 3050 2300
+Wire Wire Line
+	3050 2300 2950 2300
+Wire Wire Line
+	2950 2300 2950 2000
+Wire Wire Line
+	2950 2000 2700 2000
+Wire Wire Line
+	2700 2000 2700 2400
+Wire Wire Line
+	2700 2400 2750 2400
+Wire Wire Line
+	2750 2400 2750 2450
+Wire Wire Line
+	2750 2450 2800 2450
+Wire Wire Line
+	2800 2450 2800 2500
+Wire Wire Line
+	2800 2500 2850 2500
+Wire Wire Line
+	2850 2500 2850 2550
+Wire Wire Line
+	2850 2550 2900 2550
+Wire Wire Line
+	2900 2550 2900 2600
+Wire Wire Line
+	2900 2600 2950 2600
+Wire Wire Line
+	2950 2600 2950 2650
+Wire Wire Line
+	2950 2650 3050 2650
+Wire Wire Line
+	3050 2650 3050 2800
+Wire Wire Line
+	3050 2800 3200 2800
+Wire Wire Line
+	3200 2800 3200 2950
+Connection ~ 3350 2950
+Wire Wire Line
+	3750 2600 4050 2600
+Wire Wire Line
+	4050 2600 4050 2050
 $EndSCHEMATC
